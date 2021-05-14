@@ -68,7 +68,7 @@ const CardsGrid = () => {
         } else {
             setGallery(cards[page]);
         }
-    }, [page, cards, numberOfThumbnails])
+    }, [page, cards, album, numberOfThumbnails])
 
     const onClearAlbum = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -134,7 +134,7 @@ const CardsGrid = () => {
     const fetchMoreData = () => {
         setTimeout(() => {
             setPage(page + 1);
-        }, 500);
+        }, 1000);
     };
 
     return (
@@ -144,19 +144,19 @@ const CardsGrid = () => {
                 <Header/>
             </HeaderContext.Provider>
             {
-                !isMobile && (
+                !isMobile && gallery && gallery.length > 0 && (
                     <main className={styles.container}>
                         {
-                            gallery && gallery.length > 0 && gallery.map((card: ICard) => <CardComponent key={getGuid()} card={card}
+                            gallery.map((card: ICard) => <CardComponent key={getGuid()} card={card}
                                                                                    onSelectCard={onSelectedCard}/>)
                         }
                     </main>
                 )
             }
             {
-                isMobile && (
+                isMobile && gallery && gallery.length > 0 && (
                     <InfiniteScroll
-                        dataLength={cards.length}
+                        dataLength={gallery.length}
                         next={fetchMoreData}
                         hasMore={page < cards.length - 1}
                         loader={<h4>Loading...</h4>}
@@ -164,7 +164,7 @@ const CardsGrid = () => {
                     >
                         <main className={styles.container}>
                             {
-                                gallery && gallery.length > 0 && gallery.map((card: ICard) => <CardComponent key={getGuid()} card={card}
+                                gallery.map((card: ICard) => <CardComponent key={getGuid()} card={card}
                                                                                        onSelectCard={onSelectedCard}/>)
                             }
                         </main>
