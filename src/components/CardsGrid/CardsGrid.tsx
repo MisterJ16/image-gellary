@@ -147,7 +147,7 @@ const CardsGrid = () => {
                 !isMobile && (
                     <main className={styles.container}>
                         {
-                            gallery && gallery.map((card: ICard) => <CardComponent key={getGuid()} card={card}
+                            gallery && gallery.length > 0 && gallery.map((card: ICard) => <CardComponent key={getGuid()} card={card}
                                                                                    onSelectCard={onSelectedCard}/>)
                         }
                     </main>
@@ -164,7 +164,7 @@ const CardsGrid = () => {
                     >
                         <main className={styles.container}>
                             {
-                                gallery && gallery.map((card: ICard) => <CardComponent key={getGuid()} card={card}
+                                gallery && gallery.length > 0 && gallery.map((card: ICard) => <CardComponent key={getGuid()} card={card}
                                                                                        onSelectCard={onSelectedCard}/>)
                             }
                         </main>
