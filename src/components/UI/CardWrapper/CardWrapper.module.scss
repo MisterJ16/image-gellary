@@ -1,0 +1,15 @@
+.wrapper {
+  display: block;
+  box-sizing: content-box;
+  width: auto;
+  border: 1px solid #5be6fe;
+  box-sizing: border-box;
+  box-shadow: 0px 1px 16px 4px rgba(113, 193, 231, 0.64);
+  border-radius: 7px;
+  padding: 1rem;
+}
+@media screen and (max-width: 600px) {
+  .wrapper {
+    min-width: 0px;
+  }
+}

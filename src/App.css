@@ -1,3 +1,14 @@
+body {
+  background-color: #0c0928;
+  padding: 5% 20px;
+}
+
+@media screen and (min-width: 768px) {
+  body{
+    padding: 3% 10%;
+  }
+}
+/*
 .App {
   text-align: center;
 }
@@ -36,3 +47,4 @@
     transform: rotate(360deg);
   }
 }
+*/

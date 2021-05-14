@@ -1,0 +1,33 @@
+.card {
+  height: 100%;
+  padding: 1rem 0 0;
+  border: 2px solid #fefefe;
+  text-align: center;
+  cursor: pointer;
+
+  & .cardTitle {
+    color: #fefefe;
+    text-align: left;
+    width: auto;
+    padding: 1rem 0 0;
+    font-size: 13px;
+    border-top: 0.1rem solid #565656;
+    margin: 0 1rem;
+  }
+
+  & .cardImage {
+    margin: 0 1rem 1rem;
+  }
+
+  &:hover{
+    background: rgba(68, 68, 68, 0.5);
+    border-color: rgba(68, 68, 68, 1);
+    animation: fadeIn 0.3s ease-out 0.3s both;
+  }
+
+  @media screen and (max-width: 768px) {
+    & .cardImage {
+      width: 120px;
+    }
+  }
+}

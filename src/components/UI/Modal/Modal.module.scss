@@ -1,0 +1,84 @@
+.modal {
+  position: fixed;
+  z-index: 501;
+  width: 666px;
+  padding: 16px;
+  left: calc((100vw - 660px)/2);
+  top: 25%;
+  box-sizing: border-box;
+
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatebottom;
+  animation-duration: 0.4s;
+}
+.overlay {
+  position: fixed;
+  z-index: 500;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+}
+.modal.closed,
+.overlay.closed {
+  display: none;
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+}
+
+@keyframes animatebottom {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+  to {
+    top: 25%;
+    opacity: 1;
+  }
+}
+
+@keyframes animatetop {
+  from {
+    top: 25%;
+    opacity: 1;
+  }
+  to {
+    top: 0;
+    opacity: 0;
+  }
+}
+
+
+@media screen and (max-width: 600px) {
+  .modal {
+    width: 450px;
+    left: calc(50% - 225px);
+    padding: 35px;
+
+    img{
+      max-width: 245px;
+    }
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .modal {
+    width: 666px;
+    top: 15%;
+  }
+  .modal {
+    left: calc((100vw - 666px)/2);
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .modal {
+    width: 350px;
+    left: calc(50% - 175px);
+    padding: 10px 35px 35px;
+  }
+}
