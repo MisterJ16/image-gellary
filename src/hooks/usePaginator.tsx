@@ -1,61 +1,69 @@
 import React, {useEffect, useState} from "react";
 import {AVAILABLE_PAGES} from "../constants/constants";
 import {ICard} from "../contexts/interfaces";
-import styles from "../components/Footer/Footer.module.scss";
+import styles from "../components/UI/Paginator/Paginator.module.scss";
+import {getGuid} from "../utils/utils";
 
-const usePaginator = (contextFooter: any) => {
+const usePaginator = (cards: ICard[], page: number, onChangedPage: any) => {
     const [upperPageBound, setUpperPageBound] = useState(AVAILABLE_PAGES - 1);
+
     const [lowerPageBound, setLowerPageBound] = useState(0);
 
-    const pagesCount = contextFooter.cards.length - 1;
+    const pagesCount: number = cards.length - 1;
 
     const onChangePage = (
         e: any,
         page: number
-    ) => {
+    ): void => {
         e.preventDefault();
-        contextFooter.onChangedPage(e, page);
+        onChangedPage(e, page);
     };
 
     useEffect(() => {
-        if (contextFooter.page === pagesCount) {
+        if (page === pagesCount) {
             setLowerPageBound(pagesCount - AVAILABLE_PAGES);
             setUpperPageBound(pagesCount);
-        } else if (contextFooter.page === 0 && (pagesCount === upperPageBound || contextFooter.page < lowerPageBound)) {
-            setLowerPageBound(contextFooter.page);
+        } else if (page === 0 && (pagesCount === upperPageBound || page < lowerPageBound)) {
+            setLowerPageBound(page);
             setUpperPageBound(AVAILABLE_PAGES - 1);
         } else {
-            if (contextFooter.page > upperPageBound) {
+            if (page > upperPageBound) {
                 setLowerPageBound(upperPageBound);
-                setUpperPageBound(contextFooter.page + AVAILABLE_PAGES - 1);
+                setUpperPageBound(page + AVAILABLE_PAGES - 1);
             } else {
-                if (contextFooter.page !== 0 && contextFooter.page <= lowerPageBound) {
-                    setLowerPageBound(contextFooter.page - AVAILABLE_PAGES);
-                    setUpperPageBound(contextFooter.page);
+                if (page !== 0 && page <= lowerPageBound) {
+                    setLowerPageBound(page - AVAILABLE_PAGES);
+                    setUpperPageBound(page);
                 }
             }
         }
-    }, [contextFooter.page])
+    }, [lowerPageBound, page, pagesCount, upperPageBound])
 
-    const renderPageNumbers = contextFooter.cards.map((v: ICard, i: number) => {
-        if (contextFooter.page === i && i === 0) {
+    const renderPageNumbers: any = cards.map((v: ICard, i: number) => {
+        if (page === i && i === 0) {
             return (
-                <li className={styles.marginBoth} key={i + 1}><span className='selected'>{i + 1}</span></li>
+                <li className={styles.marginBoth} key={getGuid()}><span className='selected'>{i + 1}</span></li>
             )
-        } else if (contextFooter.page !== i && i === 0 && upperPageBound < AVAILABLE_PAGES) {
+        } else if (page !== i && i === 0 && upperPageBound < AVAILABLE_PAGES) {
             return (
-                <li className={styles.marginBoth} key={i + 1}><a onClick={(e) => onChangePage(e, i)}>{i + 1}</a></li>
+                <li className={styles.marginBoth} key={getGuid()}>
+                    <a href="#/" onClick={(e) => onChangePage(e, i)}>{i + 1}</a>
+                </li>
             )
         } else if (i > lowerPageBound && i <= upperPageBound) {
-            if (contextFooter.page === i) {
+            if (page === i) {
                 return (
-                    <li className={styles.marginBoth} key={i + 1}><span className='selected'>{i + 1}</span></li>
+                    <li className={styles.marginBoth} key={getGuid()}><span className='selected'>{i + 1}</span></li>
                 )
             }
 
             return (
-                <li className={styles.marginBoth} key={i + 1}><a onClick={(e) => onChangePage(e, i)}>{i + 1}</a></li>
+                <li className={styles.marginBoth} key={getGuid()}>
+                    <a href="#/" onClick={(e) => onChangePage(e, i)}>{i + 1}</a>
+                </li>
             )
+        } else {
+            return false;
         }
     });
 

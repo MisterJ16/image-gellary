@@ -10,7 +10,7 @@ export interface IProps {
     onSelectCard: (e: React.ChangeEvent<HTMLInputElement>, card: ICard) => void;
 }
 
-const CardComponent = (props: IProps) => {
+const Card = (props: IProps) => {
     const {card: {thumbnailUrl, title}} = props;
 
     return (
@@ -21,4 +21,4 @@ const CardComponent = (props: IProps) => {
     )
 }
 
-export default CardComponent;
+export default Card;

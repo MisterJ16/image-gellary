@@ -1,10 +1,10 @@
 import React from "react";
 
-import useOutsideClick from "../../hooks/useOutsideClick";
+import useOutsideClick from "../../../hooks/useOutsideClick";
 import styles from "./Thumbnails.module.scss";
-import {NUMBER_OF_THUMBNAILS} from "../../constants/constants";
-import {HeaderContext} from "../../contexts/GalleryContext";
-import {getGuid} from "../../utils/utils";
+import {NUMBER_OF_THUMBNAILS} from "../../../constants/constants";
+import {HeaderContext} from "../../../contexts/GalleryContext";
+import {getGuid} from "../../../utils/utils";
 
 export interface IProps {
     show?: boolean;
@@ -22,7 +22,7 @@ const Thumbnails = (props: IProps) => {
         e: any
     ) => {
         e.preventDefault();
-        contextHeader.onChangedThumbnails(e, e.currentTarget.id);
+        contextHeader.onChangedThumbnails(e);
         props.onHideDropdown(e);
     };
 

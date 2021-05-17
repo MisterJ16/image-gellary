@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {isMobile} from "react-device-detect";
 
-import CardComponent from "../UI/Card/CardComponent";
+import Card from "../UI/Card/Card";
 import {FooterContext, GalleryContext, HeaderContext} from "../../contexts/GalleryContext";
-import {getCardsBySelectedAlbum, searchCardsByTitle, splitCardsByDefaultNumberOfThumbnails} from "../../utils/utils";
-import {DEFAULT_NUMBER_OF_THUMBNAILS} from "../../constants/constants";
+import {searchCardsByTitle} from "../../utils/utils";
 import {ICard} from "../../contexts/interfaces";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
@@ -14,61 +13,40 @@ import CardWrapper from "../UI/CardWrapper/CardWrapper";
 import Modal from "../UI/Modal/Modal";
 import InfiniteScroll from "react-infinite-scroll-component";
 import {getGuid} from "../../utils/utils"
+import {useGridCards} from "../../hooks/useGridCards";
 
 const CardsGrid = () => {
     const contextCards: any = React.useContext(GalleryContext);
 
     const [modal, setModal] = React.useState(false);
 
-    const [cards, setCards] = useState([]);
+    const {
+        cards,
+        setCards,
+        card,
+        setCard,
+        numberOfThumbnails,
+        setNumberOfThumbnails,
+        album,
+        setAlbum,
+        page,
+        setPage,
+        gallery,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        setGallery,
+        fetchMoreData
+    } = useGridCards(contextCards)
 
-    const [card, setCard] = useState({
-        albumId: null,
-        id: null,
-        title: null,
-        url: null,
-        thumbnailUrl: null
-    });
-
-    const [page, setPage] = useState(0);
-
-    const [gallery, setGallery] = useState([]);
-
-    const [numberOfThumbnails, setNumberOfThumbnails] = useState(DEFAULT_NUMBER_OF_THUMBNAILS);
-
-    const [album, setAlbum] = useState(0);
-
-    useEffect(() => {
-        const cardsByDefaultThumbnails: Array<Array<ICard>> | any = splitCardsByDefaultNumberOfThumbnails(contextCards.data, numberOfThumbnails);
-        return setCards(cardsByDefaultThumbnails);
-    }, [numberOfThumbnails])
 
     const onChangedThumbnails = (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
         e.preventDefault();
-        return setNumberOfThumbnails(+value);
+        return setNumberOfThumbnails(+e.currentTarget.id);
     }
 
     const onChangedAlbum = (e: React.ChangeEvent<HTMLInputElement>, value: string) => {
         e.preventDefault();
-        return setAlbum(+value);
+        return setAlbum(+e.currentTarget.id);
     }
-
-    useEffect(() => {
-        const cardsBySelectedAlbum: Array<Array<ICard>> | any = getCardsBySelectedAlbum(contextCards.data, album, numberOfThumbnails);
-        return setCards(cardsBySelectedAlbum);
-    }, [album])
-
-    useEffect(() => {
-        if (isMobile) {
-            if (page === 0) {
-                setGallery(cards[page]);
-            } else {
-                setGallery(gallery.concat(cards[page]));
-            }
-        } else {
-            setGallery(cards[page]);
-        }
-    }, [page, cards, album, numberOfThumbnails])
 
     const onClearAlbum = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
@@ -91,10 +69,6 @@ const CardsGrid = () => {
         return setCard(card);
     }
 
-    useEffect(() => {
-        card && card.id !== null && onModalShow();
-    }, [card, setCard])
-
     const onModalShow = (event?: React.ChangeEvent<HTMLInputElement>) => {
         event && event.preventDefault();
         setBodyOverflow(true);
@@ -114,6 +88,10 @@ const CardsGrid = () => {
         return setModal(false);
     };
 
+    React.useEffect(() => {
+        card && card.id !== null && onModalShow();
+    }, [card, setCard])
+
     const header = {
         numberOfThumbnails,
         onChangedThumbnails,
@@ -131,15 +109,8 @@ const CardsGrid = () => {
         onChangedPage
     }
 
-    const fetchMoreData = () => {
-        setTimeout(() => {
-            setPage(page + 1);
-        }, 1000);
-    };
-
     return (
         <>
-
             <HeaderContext.Provider value={header}>
                 <Header/>
             </HeaderContext.Provider>
@@ -147,8 +118,8 @@ const CardsGrid = () => {
                 !isMobile && gallery && gallery.length > 0 && (
                     <main className={styles.container}>
                         {
-                            gallery.map((card: ICard) => <CardComponent key={getGuid()} card={card}
-                                                                                   onSelectCard={onSelectedCard}/>)
+                            gallery.map((card: ICard) => <Card key={getGuid()} card={card}
+                                                               onSelectCard={onSelectedCard}/>)
                         }
                     </main>
                 )
@@ -164,8 +135,8 @@ const CardsGrid = () => {
                     >
                         <main className={styles.container}>
                             {
-                                gallery.map((card: ICard) => <CardComponent key={getGuid()} card={card}
-                                                                                       onSelectCard={onSelectedCard}/>)
+                                gallery.map((card: ICard) => <Card key={getGuid()} card={card}
+                                                                   onSelectCard={onSelectedCard}/>)
                             }
                         </main>
                     </InfiniteScroll>

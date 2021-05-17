@@ -1,0 +1,9 @@
+.search {
+  height: 1.25rem;
+  padding: 0.5rem;
+  min-width: 500px;
+  @media screen and (max-width: 768px) {
+    min-width: 50px;
+    margin-left: 1rem;
+  }
+}

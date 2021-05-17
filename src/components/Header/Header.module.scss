@@ -45,12 +45,6 @@
     cursor: pointer;
   }
 
-  .search{
-    height: 1.25rem;
-    padding: 0.5rem;
-    min-width: 500px;
-  }
-
   @media screen and (max-width: 768px) {
     span:nth-of-type(even){
       width: 4rem;
@@ -62,11 +56,6 @@
       height: 1rem;
       margin: 0 5px;
       cursor: pointer;
-    }
-
-    .search{
-      min-width: 50px;
-      margin-left: 1rem;
     }
   }
 }

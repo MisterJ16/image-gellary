@@ -1,9 +1,9 @@
 import React from "react";
 
-import useOutsideClick from "../../hooks/useOutsideClick";
+import useOutsideClick from "../../../hooks/useOutsideClick"
 import styles from "./Albums.module.scss";
-import {HeaderContext} from "../../contexts/GalleryContext";
-import {getGuid} from "../../utils/utils";
+import {HeaderContext} from "../../../contexts/GalleryContext";
+import {getGuid} from "../../../utils/utils";
 
 export interface IProps {
     show?: boolean;
@@ -22,7 +22,7 @@ const Albums = (props: IProps) => {
         e: any
     ) => {
         e.preventDefault();
-        contextHeader.onChangedAlbum(e, e.currentTarget.id);
+        contextHeader.onChangedAlbum(e);
         props.onHideAlbums(e);
     };
 

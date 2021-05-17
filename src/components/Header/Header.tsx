@@ -2,10 +2,11 @@ import React from 'react';
 
 import styles from "./Header.module.scss";
 
-import Thumbnails from "../Thumbnails/Thumbnails";
+import Thumbnails from "../UI/Thumbnails/Thumbnails";
 import {GalleryContext, HeaderContext} from "../../contexts/GalleryContext";
-import Albums from "../Albums/Albums";
+import Albums from "../UI/Albums/Albums";
 import close from "../../assets/images/close.svg";
+import Search from "../UI/Search/Search";
 
 const Header = () => {
     const contextHeader: any = React.useContext(HeaderContext);
@@ -58,8 +59,7 @@ const Header = () => {
                     onClick={onShowAlbums}>{contextHeader.album === 0 ? 'Albums...' : `Album ${contextHeader.album}`}</span>
                 {contextHeader.album !== 0 && <img src={close} onClick={contextHeader.onClearAlbum} alt="clear"/>}
             </div>
-            <input type="text" className={styles.search} onInput={contextHeader.onChangedSearch}
-                   placeholder="Search by title..."/>
+            <Search onChangedSearch={contextHeader.onChangedSearch}/>
         </header>
     )
 }
